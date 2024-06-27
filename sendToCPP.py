@@ -30,3 +30,17 @@ print("TIME ELAPSED: " +str(time.time() - start))
 mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
 mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
 mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS) # Need multiple in case it gets lost...
+mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
+mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
+mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
+mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
+mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
+mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
+mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
+mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
+mySourceSocket.sendto("stop".encode(), OTHER_ADDRESS)
+
+
+outputFile = open("output.txt", 'w')
+for i in doubles:
+    outputFile.write(i+'\n')

@@ -3,7 +3,9 @@ import sys
 import threading
 import random, time
 
-RENDEZVOUS_ADDRESS = ('192.168.1.136', 55555)
+# RENDEZVOUS_ADDRESS = ('192.168.1.136', 55555)
+RENDEZVOUS_ADDRESS = ('192.168.198.5', 55555)
+
 MY_SOURCE_PORT = 50002
 
 print("Connecting to rendezvous")

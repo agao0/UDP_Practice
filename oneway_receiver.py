@@ -3,43 +3,15 @@ import sys
 import threading
 import time
 
-RENDEZVOUS_ADDRESS = ('192.168.1.136', 55555)
-MY_SOURCE_PORT = 50002
+RENDEZVOUS_ADDRESS = ('192.168.1.66', 55555)
 
-print("Connecting to rendezvous")
+MY_SOURCE_PORT = 50002
 mySourceSocket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 mySourceSocket.bind(('0.0.0.0', MY_SOURCE_PORT))
-mySourceSocket.sendto(b'0', RENDEZVOUS_ADDRESS)
-
-while True:
-    data = mySourceSocket.recv(1024).decode()
-
-    if data.strip() == 'ready':
-        print("Checked in with server, waiting until pair is complete.")
-        break
-
-# Rendezvous server gives the info of the other client
-data = mySourceSocket.recv(1024).decode()
-ip, sport= data.split(' ')
-OTHER_SOURCE_PORT = int(sport)
-
-print("\nGot peer:")
-print("    ip:   {}".format(ip))
-print("    port:    {}".format(sport))
-
-OTHER_ADDRESS = (ip, OTHER_SOURCE_PORT)
-
-# Hole Punch
-print("Punching hole")
-
-mySourceSocket.sendto(b'0', OTHER_ADDRESS)
-
-print("Ready to chat")
 
 # LISTENING
-doubles = []
-start = time.time()
-print("START TIME")
+xvals = []
+yvals = []
 while True:
     data = mySourceSocket.recv(2048) # How does this matter if the buffer is still in the socket? I thought UDP doesn't know where a message ends...
     # OBSERVATIONS: 
@@ -52,14 +24,15 @@ while True:
     # ...
     # If buffer is set to 1024, and removed print, and added 3 stops, lost 1 data packet on 275th double, but back to full speed sending 1.18, full speed input 1.21s. 
     # If buffer is set to 2048, lost no data, also even faster sending and input. Interesting...
+    data = mySourceSocket.recv(2048)
     string = data.decode()
-    if string == "stop":
-        break
-    doubles += [string]
-print("TIME ELAPSED: " +str(time.time() - start))
+    line = string.split(' ')
+    xvals += [float(line[0])]
+    yvals += [float(line[1])]
+    print(xvals[-1], yvals[-1])
 
     
 
-outputFile = open("VREX.txt", 'w')
+outputFile = open("test.txt", 'w')
 for i in doubles:
     outputFile.write(i+'\n')
